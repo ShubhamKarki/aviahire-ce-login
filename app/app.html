@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Aviahire</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins|Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+      rel="stylesheet"
+    />
+    <script src="scripts/jquery-2.2.4.min.js"></script>
+    <script src="scripts/underscore-min.js"></script>
+    <script type="text/javascript" src="scripts/js.cookie.js"></script>
+    <script type="text/javascript" src="scripts/select2.min.js"></script>
+    <script type="text/javascript" src="scripts/constants.js"></script>
+    <script type="text/javascript" src="scripts/contactProfile.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/auth.js"></script>
+  </head>
+
+  <body>
+    <div class="body" style="text-align: center;">
+      <h2>Welcome To Aviahire</h2>
+    </div>
+    <div id="show-logout"></div>
+    <div id="show-profile"></div>
+    <div id="show-login"></div>
+
+    <script type="text/template" id="parsedProfileSection">
+          <img src=<%=rc.profile.basic_info[0].image_url%>  alt="profile" />
+          <div><%= rc.profile.basic_info[0].name %></div>
+          <br>
+          <%if(rc.profile.response.githubUrl != null) { %>
+            <a href=<%=rc.profile.response.githubUrl.url%>  target='_blank' >Github</a>
+        <% } %>
+        <%if(rc.profile.response.twitterUrl != null) { %>
+          <a href=<%=rc.profile.response.twitterUrl.url%>  target='_blank' >Twitter</a>
+      <% } %>
+          <% var skills = rc.profile.skills[0].length > 4 ?  rc.profile.skills[0].slice(0, 4)  :rc.profile.skills[0] ; %>
+            <%if(skills.length >0) { %>
+                <div>Skills</div>
+            <% } %>
+          <ul>
+            <% _(skills).each(function(skill) { %>
+                <li>
+                    <%= skill %>
+                </li>
+            <% }); %>
+        </ul>
+          <br>
+    </script>
+
+    <script id="AhAppLogin" type="text/template">
+      <div id="tenantAuth">
+        <form class="form-extension-login" id="AH-tenant-form">
+          <div class="form-group">
+            <label for="exampleTenant">Tenant</label>
+            <input type="text" class="form-control" id="exampleTenant" placeholder="Tenant" name="user[tenant]" required>
+          </div>
+          <button type="submit" class="btn btn-default" id="AH-tenant-btn">Next</button>
+        </form>
+      </div>
+
+      <div class="login-wrap loginAuth">
+      <img src="images/badge-staging@2x.png" alt="DS badge" class="ds-banner-large hide">
+      <div class="logo-wrap">
+        <i class="icon-dealsignal"></i>
+      </div>
+      <form class="form-extension-login" id="DS-login-form">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="user[email]" disabled required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="user[password]" disabled required>
+        </div>
+        <button type="submit" class="btn btn-default" id="AH-signin-btn" disabled>Sign In</button>
+      </form>
+      </div>
+    </script>
+
+    <script id="AhAppLogout" type="text/template">
+          <button  class="btn btn-default" id="AH-logout-btn">Log Out</button>
+    </div>
+    </script>
+  </body>
+</html>
